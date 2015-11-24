@@ -13,6 +13,9 @@ rerun.txt
 pickle-email-*.html
 .env
 
+# Ignore Spring files.
+/spring/*.pid
+
 ## Environment normalisation:
 /.bundle
 /vendor/bundle
