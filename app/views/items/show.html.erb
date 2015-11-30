@@ -1,15 +1,31 @@
+<% # <head>の中に埋め込まれる %>
+<% content_for :head do %>
+  <%= content_tag :title, "#{@item.title} - Monolist" %>
+  <%= tag :meta,
+        name: "description",
+        content: "#{@item.title}に関する情報です。この商品を欲しい人、持ってる人を表示しています。" %>
+  <%= tag :meta,
+        name: "keywords",
+        content: "Monolist,#{@item.title}" %>
+<% end %>
+
+
 <div class="container">
   <div class="container-inner inner-sm clearfix">
     <div class="item-single-main">
       <div class="image">
         <div class="img-wrap">
-          <% #TODO 商品イメージ %>
-          <%= image_tag("no-image.png" , alt: @item.title) %>
+          <% # 商品イメージ %>
+          <% if @item.large_image.present? %>
+            <%= image_tag(@item.large_image , alt: @item.title) %>
+          <% else %>
+            <%= image_tag("no-image.png" , alt: @item.title) %>
+          <% end %>
         </div>
       </div>
       <div class="title">
-        <% #TODO 商品タイトル %>
-        仮タイトル
+        <% # 商品タイトル %>
+        <%= @item.title %>
       </div>
       <%= render 'action' , item: @item %>
     </div>
@@ -17,19 +33,33 @@
       <div class="side-box">
         <h4 class="side-box-title">Haveしたユーザー</h4>
         <div class="side-box-body">
-          <% # TODO Haveしたユーザー一覧 %>
-
+          <% # Haveしたユーザー一覧 %>
+          <% @item.have_users.each do |user| %>
+            <%= link_to user do %>
+              <span class="gravatar">
+                <%= gravatar_for user, size: 20 %>
+              </span>
+            <% end %>
+          <% end %>
         </div>
       </div>
       <div class="side-box">
         <h4 class="side-box-title">Wantしたユーザー</h4>
         <div class="side-box-body">
-          <% # TODO Wantしたユーザー一覧 %>
+          <% # Wantしたユーザー一覧 %>
+          <% @item.want_users.each do |user| %>
+            <%= link_to user do %>
+              <span class="gravatar">
+                <%= gravatar_for user, size: 20 %>
+              </span>
+            <% end %>
+          <% end %>
         </div>
       </div>
       <div class="text-center">
-        <% #TODO 正しいリンク先に %>
-        <%= link_to(image_tag("amazon-button.png", {alt: "Amazon詳細ページへ"}), '#') %>
+        <% # Amazonへのリンク %>
+        <%= link_to(image_tag("amazon-button.png", {alt: "Amazon詳細ページへ"}),
+                    @item.detail_page_url, target: "_blank") %>
       </div>
     </div>
   </div>
