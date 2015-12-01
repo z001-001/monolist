@@ -1,3 +1,15 @@
+<% # <head>の中に埋め込まれる %>
+<% content_for :head do %>
+  <%= content_tag :title, "#{@user.name}のページ - Monolist" %>
+  <%= tag :meta,
+        name: "description",
+        content: "#{@user.name}のモノページ。#{@user.name}の欲しいモノ、持ってるモノを表示しています。" %>
+  <%= tag :meta,
+        name: "keywords",
+        content: "Monolist,#{@user.name}" %>
+<% end %>
+
+
 <%= render 'profile' , user: @user %>
 
 
