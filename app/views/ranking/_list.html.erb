@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="container-inner inner-sm clearfix">
+    <% @rank_list.each do |list| %>
+      <% rank, count, item = list %>
+      <div class="rank-box">
+        <div class="rank-inner-box rank-<%= rank %>">
+          <div class="rank-num"><%= rank %>位</div>
+          <div class="rank-count"><%= count %> ユーザー</div>
+        </div>
+      </div>
+      <div class="item-box">
+        <div class="image">
+          <div class="img-wrap">
+            <% if item.large_image.present? %>
+              <%= image_tag(item.large_image , alt: item.title) %>
+            <% else %>
+              <%= image_tag("no-image.png" , alt: item.title) %>
+            <% end %>
+          </div>
+        </div>
+        <div class="detail">
+          <p class="title">
+            <%= item.title %>
+          </p>
+        </div>
+        <%= render 'items/action' , item: item if logged_in? %>
+      </div>
+    <% end %>
+  </div>
+</div>
